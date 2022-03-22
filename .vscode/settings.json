@@ -1,5 +1,8 @@
 {
     "files.associations": {
         "iostream": "cpp"
-    }
+    },
+    "commentTranslate.source": "Bing",
+    "commentTranslate.multiLineMerge": false,
+    "commentTranslate.targetLanguage": "zh-CN"
 }
