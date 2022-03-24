@@ -29,10 +29,10 @@
  * @version      : 
  * @Company      : HOPE
  * @Author       : MCD
- * @Date         : 2022-03-23 10:13:24
+ * @Date         : 2022-03-24 10:51:01
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-24 09:37:44
- * @FilePath     : /My_Cpp_test/Practice/拷贝构造函数/clock.cpp
+ * @LastEditTime : 2022-03-24 12:36:54
+ * @FilePath     : /My_Cpp_test/Practice/构造函数与析构函数/派生类构造函数调用顺序.cpp
  * @Description  : 
  * 
  * ******************************************
@@ -40,57 +40,41 @@
 
 #include <iostream>
 #include <climits>
-#include "clock.h"
 
 using namespace std;
 
-Clock::Clock(int NewH, int NewM, int NewS)
+class A
 {
-    this->Hour = NewH;
-    this->Minute = NewM;
-    this->Second = NewS;
-}
+public:
+    A() { cout << "Constructing A" << endl; };
+    ~A() { cout << "Destroying A" << endl; };
+};
+class B
+{
+public:
+    B() { cout << "Constructing B" << endl; };
+    ~B() { cout << "Destroying B" << endl; };
+};
+class C
+{
+public:
+    C() { cout << "Constructing C" << endl; };
+    ~C() { cout << "Destroying C" << endl; };
+};
+class D : public C
+{
+public:
+    D() { cout << "Constructing D" << endl; };
+    ~D() { cout << "Destroying D" << endl; };
 
-Clock::Clock(Clock &c)
-{
-    this->Hour = c.Hour;
-    this->Minute = c.Minute;
-    this->Second = c.Second;
-}
-
-void Clock::SetTime(int NewH, int NewM, int NewS)
-{
-    // 加不加this指针都一样
-    this->Hour = NewH;
-    this->Minute = NewM;
-    this->Second = NewS;
-}
-
-void Clock::ShowTime()
-{
-    // cout << this->Hour << endl;
-    // cout << this->Minute << endl;
-    // cout << this->Second << endl;
-    cout << this->Hour << ":" << this->Minute << ":" << this->Second << endl;
-}
-
-Clock::~Clock()
-{
-    cout << "out" << endl;
-}
+    B b;
+    A a;
+    C c;
+};
 
 int main(int argc, char const *argv[])
 {
-    Clock c(0, 0, 0);
-
-    c.SetTime(10, 22, 19);
-    c.ShowTime();
-
-    // 拷贝构造函数调用
-    Clock cl(c);
-    cl.ShowTime();
-    cl.SetTime(12, 41, 20);
-    cl.ShowTime();
-
+    // C->B->A->C->D
+    D d;
     return 0;
 }

@@ -29,10 +29,10 @@
  * @version      : 
  * @Company      : HOPE
  * @Author       : MCD
- * @Date         : 2022-03-23 10:13:24
+ * @Date         : 2022-03-24 10:51:01
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-24 09:37:44
- * @FilePath     : /My_Cpp_test/Practice/拷贝构造函数/clock.cpp
+ * @LastEditTime : 2022-03-24 11:05:16
+ * @FilePath     : /My_Cpp_test/Practice/构造函数与析构函数/构造函数调用次序.cpp
  * @Description  : 
  * 
  * ******************************************
@@ -40,57 +40,60 @@
 
 #include <iostream>
 #include <climits>
-#include "clock.h"
 
 using namespace std;
 
-Clock::Clock(int NewH, int NewM, int NewS)
+class A
 {
-    this->Hour = NewH;
-    this->Minute = NewM;
-    this->Second = NewS;
-}
+    int x;
 
-Clock::Clock(Clock &c)
-{
-    this->Hour = c.Hour;
-    this->Minute = c.Minute;
-    this->Second = c.Second;
-}
+public:
+    A(int i = 19)
+    {
+        x = i;
+        cout << "A------" << x << endl;
+    }
+};
 
-void Clock::SetTime(int NewH, int NewM, int NewS)
+class B
 {
-    // 加不加this指针都一样
-    this->Hour = NewH;
-    this->Minute = NewM;
-    this->Second = NewS;
-}
+    int y;
 
-void Clock::ShowTime()
-{
-    // cout << this->Hour << endl;
-    // cout << this->Minute << endl;
-    // cout << this->Second << endl;
-    cout << this->Hour << ":" << this->Minute << ":" << this->Second << endl;
-}
+public:
+    B(int i = 100)
+    {
+        y = i;
+        cout << "B------" << y << endl;
+    }
+};
 
-Clock::~Clock()
+class C
 {
-    cout << "out" << endl;
-}
+    int z;
+
+public:
+    C(int i)
+    {
+        z = i;
+        cout << "C------" << z << endl;
+    }
+};
+
+class D : public B
+{
+public:
+    C c1, c2;
+    A *a1 = new A(10);
+    A a0, a4;
+    D() : B(2),a4(4), c2(2), c1(1)
+    {
+        cout << "D------5" << endl;
+    }
+};
 
 int main(int argc, char const *argv[])
 {
-    Clock c(0, 0, 0);
-
-    c.SetTime(10, 22, 19);
-    c.ShowTime();
-
-    // 拷贝构造函数调用
-    Clock cl(c);
-    cl.ShowTime();
-    cl.SetTime(12, 41, 20);
-    cl.ShowTime();
-
+    // B->c1->c2->a1->a0->a4->D
+    D d;
     return 0;
 }

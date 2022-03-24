@@ -3,7 +3,7 @@
         "iostream": "cpp",
         "string": "cpp"
     },
-    "commentTranslate.source": "Bing",
-    "commentTranslate.multiLineMerge": false,
+    "commentTranslate.source": "Baidu",
+    "commentTranslate.multiLineMerge": true,
     "commentTranslate.targetLanguage": "zh-CN"
 }

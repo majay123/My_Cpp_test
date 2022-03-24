@@ -29,10 +29,10 @@
  * @version      : 
  * @Company      : HOPE
  * @Author       : MCD
- * @Date         : 2022-03-23 10:13:24
+ * @Date         : 2022-03-24 10:07:32
  * @LastEditors  : MCD
- * @LastEditTime : 2022-03-24 09:37:44
- * @FilePath     : /My_Cpp_test/Practice/拷贝构造函数/clock.cpp
+ * @LastEditTime : 2022-03-24 10:48:43
+ * @FilePath     : /My_Cpp_test/Practice/基类与派生类关系/基类与派生类1.cpp
  * @Description  : 
  * 
  * ******************************************
@@ -40,57 +40,53 @@
 
 #include <iostream>
 #include <climits>
-#include "clock.h"
 
 using namespace std;
 
-Clock::Clock(int NewH, int NewM, int NewS)
+class A
 {
-    this->Hour = NewH;
-    this->Minute = NewM;
-    this->Second = NewS;
+    int a;
+
+public:
+    void setA(int x) { a = x; }
+    int getA() { return a; }
+};
+
+class B : public A
+{
+    int b;
+
+public:
+    void setB(int x) { b = x; }
+    int getB() { return b; }
+};
+
+void f(A a, int x)
+{
+    a.setA(x);
 }
 
-Clock::Clock(Clock &c)
-{
-    this->Hour = c.Hour;
-    this->Minute = c.Minute;
-    this->Second = c.Second;
-}
-
-void Clock::SetTime(int NewH, int NewM, int NewS)
-{
-    // 加不加this指针都一样
-    this->Hour = NewH;
-    this->Minute = NewM;
-    this->Second = NewS;
-}
-
-void Clock::ShowTime()
-{
-    // cout << this->Hour << endl;
-    // cout << this->Minute << endl;
-    // cout << this->Second << endl;
-    cout << this->Hour << ":" << this->Minute << ":" << this->Second << endl;
-}
-
-Clock::~Clock()
-{
-    cout << "out" << endl;
-}
 
 int main(int argc, char const *argv[])
 {
-    Clock c(0, 0, 0);
+    A a;
+    B b;
 
-    c.SetTime(10, 22, 19);
-    c.ShowTime();
+    a.setA(199);
+    cout << a.getA() << endl;
+    a = b;
+    b.setA(100);
+    cout << b.getA() << endl;
 
-    // 拷贝构造函数调用
-    Clock cl(c);
-    cl.ShowTime();
-    cl.SetTime(12, 41, 20);
-    cl.ShowTime();
+    b.setA(20);
+    
+    // 不明白 这个函数 为什么无法改a的值？？？？？？？
+    f(b, 10);
+    cout << b.getA() << endl;
+
+    // cout << b << endl;
+    // cout << &b << endl;
+    // printf("%p, %p" , b, &b);
 
     return 0;
 }
