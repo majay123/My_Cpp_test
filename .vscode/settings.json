@@ -2,9 +2,7 @@
     "files.associations": {
         "iostream": "cpp",
         "string": "cpp",
-        "climits": "cpp",
-        "memory": "cpp",
-        "ostream": "cpp"
+        "climits": "cpp"
     },
     "commentTranslate.source": "Baidu",
     "commentTranslate.multiLineMerge": true,
@@ -13,8 +11,7 @@
         "javascript": "node",
         "java": "cd $dir ; javac $fileName ; java $fileNameWithoutExt",
         "c": "cd $dir ; gcc $fileName -o $fileNameWithoutExt ; $dir$fileNameWithoutExt",
-        // "cpp": "cd $dir ; clang++ -g -std=c++20 $fileName -o $fileNameWithoutExt ; ./$fileNameWithoutExt; rm -rf $fileNameWithoutExt.dSYM; rm -rf $fileNameWithoutExt",
-        "cpp": "cd $dir ; g++-11 -g $fileName -o $fileNameWithoutExt ; ./$fileNameWithoutExt; rm -rf $fileNameWithoutExt.dSYM; rm -rf $fileNameWithoutExt",
+        "cpp": "cd $dir ; g++-11 -g -std=c++20 $fileName -lpthread -o $fileNameWithoutExt ; ./$fileNameWithoutExt",
         "objective-c": "cd $dir ; gcc -framework Cocoa $fileName -o $fileNameWithoutExt ; $dir$fileNameWithoutExt",
         "php": "php",
         "python": "python -u",
@@ -53,6 +50,4 @@
         "lisp": "sbcl --script",
         "kit": "kitc --run"
         },
-        "C_Cpp.default.cppStandard": "c++20",
-        "C_Cpp.default.cStandard": "gnu17",
 }
