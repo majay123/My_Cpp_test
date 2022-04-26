@@ -2,9 +2,7 @@
     "files.associations": {
         "iostream": "cpp",
         "string": "cpp",
-        "climits": "cpp",
-        "memory": "cpp",
-        "ostream": "cpp"
+        "climits": "cpp"
     },
     "commentTranslate.source": "Baidu",
     "commentTranslate.multiLineMerge": true,
@@ -53,6 +51,4 @@
         "lisp": "sbcl --script",
         "kit": "kitc --run"
         },
-        "C_Cpp.default.cppStandard": "c++20",
-        "C_Cpp.default.cStandard": "gnu17",
 }
