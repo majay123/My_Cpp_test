@@ -55,3 +55,5 @@ Mkfile.old
 .vscode/tasks.json
 .vscode/extensions.json
 .DS_Store
+.vscode/c_cpp_properties.json
+.vscode/tasks.json
