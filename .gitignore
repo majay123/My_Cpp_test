@@ -49,11 +49,5 @@
 modules.order
 Module.symvers
 Mkfile.old
-.vscode/c_cpp_properties.json
-.vscode/launch.json
-.vscode/settings.json
-.vscode/tasks.json
-.vscode/extensions.json
+.vscode/
 .DS_Store
-.vscode/c_cpp_properties.json
-.vscode/tasks.json
