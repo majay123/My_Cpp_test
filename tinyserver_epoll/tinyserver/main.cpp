@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-04-26 09:37:35
  * @LastEditors  : MCD
- * @LastEditTime : 2022-04-26 13:02:59
+ * @LastEditTime : 2022-04-27 14:47:13
  * @FilePath     : /My_Cpp_test/tinyserver_epoll/tinyserver/main.cpp
  * @Description  :
  *
@@ -95,8 +95,12 @@ int main(int argc, char const *argv[])
     }
 
     // 创建进程池
+    processpool<task_conn> *pool = processpool<task_conn>::create(listen_fd);
+    if(pool) {
+        pool->run();
+    }
 
-
+    delete pool;
     close(listen_fd);
 
     return 0;
