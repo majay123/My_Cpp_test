@@ -1,3 +1,43 @@
+/*
+ * 
+ * 　　┏┓　　　┏┓+ +
+ * 　┏┛┻━━━┛┻┓ + +
+ * 　┃　　　　　　　┃ 　
+ * 　┃　　　━　　　┃ ++ + + +
+ *  ████━████ ┃+
+ * 　┃　　　　　　　┃ +
+ * 　┃　　　┻　　　┃
+ * 　┃　　　　　　　┃ + +
+ * 　┗━┓　　　┏━┛
+ * 　　　┃　　　┃　　　　　　　　　　　
+ * 　　　┃　　　┃ + + + +
+ * 　　　┃　　　┃
+ * 　　　┃　　　┃ +  神兽保佑
+ * 　　　┃　　　┃    代码无bug　　
+ * 　　　┃　　　┃　　+　　　　　　　　　
+ * 　　　┃　 　　┗━━━┓ + +
+ * 　　　┃ 　　　　　　　┣┓
+ * 　　　┃ 　　　　　　　┏┛
+ * 　　　┗┓┓┏━┳┓┏┛ + + + +
+ * 　　　　┃┫┫　┃┫┫
+ * 　　　　┗┻┛　┗┻┛+ + + +
+ * 
+ * 
+ * 
+ * ************Copyright 2022 MCD************
+ * 
+ * @version      : 
+ * @Company      : HOPE
+ * @Author       : MCD
+ * @Date         : 2022-04-26 13:28:33
+ * @LastEditors  : MCD
+ * @LastEditTime : 2022-04-28 10:16:40
+ * @FilePath     : /My_Cpp_test/tinyserver_epoll/tinyserver/predefine.cpp
+ * @Description  : 
+ * 
+ * ******************************************
+ */
+
 #include "predefine.h"
 
 int sig_pipefd[2];
@@ -12,7 +52,7 @@ int setnonblock(int fd)
     int old_option = fcntl(fd, F_GETFL);
     int new_option = old_option | O_NONBLOCK;
     fcntl(fd, F_SETFL, new_option);
-    return new_option;
+    return old_option;
 }
 
 /**

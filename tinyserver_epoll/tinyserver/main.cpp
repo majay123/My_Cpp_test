@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-04-26 09:37:35
  * @LastEditors  : MCD
- * @LastEditTime : 2022-04-27 14:47:13
+ * @LastEditTime : 2022-04-28 10:15:35
  * @FilePath     : /My_Cpp_test/tinyserver_epoll/tinyserver/main.cpp
  * @Description  :
  *
@@ -68,12 +68,12 @@ int main(int argc, char const *argv[])
 
     listen_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (listen_fd < 0) {
-        dbg("socket error: %s", strerror(errno));
+        dbg("create socket error");
         exit(EXIT_FAILURE);
     }
 
     if(setsockopt(listen_fd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse)) < 0) {
-        dbg("setsockopt error: %s", strerror(errno));
+        dbg("reuse setsockopt error");
         exit(EXIT_FAILURE);
     }
 
@@ -84,13 +84,13 @@ int main(int argc, char const *argv[])
     
     ret = bind(listen_fd, (struct sockaddr *)&servaddr, sizeof(servaddr));
     if(ret < 0) {
-        dbg("bind error: %s", strerror(errno));
+        dbg("bind socket error");
         exit(EXIT_FAILURE);
     }
 
     ret = listen(listen_fd, SOMAXCONN);
     if(ret < 0) {
-        dbg("listen error: %s", strerror(errno));
+        dbg("listen socket error");
         exit(EXIT_FAILURE);
     }
 

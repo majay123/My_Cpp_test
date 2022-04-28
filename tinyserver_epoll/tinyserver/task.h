@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-04-26 13:28:33
  * @LastEditors  : MCD
- * @LastEditTime : 2022-04-27 14:37:35
+ * @LastEditTime : 2022-04-28 10:17:26
  * @FilePath     : /My_Cpp_test/tinyserver_epoll/tinyserver/task.h
  * @Description  :
  *
@@ -78,7 +78,7 @@ class task_conn
     }
 
     void accept_request();
-    void bad_request(int clinet);
+    void bad_request(int client);
     void cat(int client, FILE *resource);
     void cannot_execute(int client);
     void error_die(const char *sc);

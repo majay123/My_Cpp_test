@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-04-26 13:28:33
  * @LastEditors  : MCD
- * @LastEditTime : 2022-04-27 14:39:31
+ * @LastEditTime : 2022-04-28 12:56:46
  * @FilePath     : /My_Cpp_test/tinyserver_epoll/tinyserver/task.cpp
  * @Description  :
  *
@@ -61,14 +61,16 @@ void task_conn::accept_request()
     char *query_string = NULL;
 
     numchar = get_line(m_sockfd, buf, sizeof(buf));
+    // dbg(ISspace(buf[j]));
     while (ISspace(buf[j]) && (i < sizeof(method) - 1)) {
         method[i] = buf[j];
         i++;
         j++;
     }
     method[i] = '\0';
-
+    // dbg(i, j);
     dbg("task_conn:method is %s", buf);
+    dbg(method);
     if (strcasecmp(method, "GET") && strcasecmp(method, "POST")) {
         dbg("!GET & !POST");
         unimplemented(m_sockfd);
@@ -238,7 +240,7 @@ void task_conn::execute_cgi(int client, const char *path, const char *method, co
         numchars = get_line(client, buf, sizeof(buf));
         while ((numchars > 0) && strcmp("\n", buf)) {
             buf[15] = '\0';
-            if (strcasecmp(method, "Content-Length:") == 0)
+            if (strcasecmp(buf, "Content-Length:") == 0)
                 content_length = atoi(&(buf[16]));
             numchars = get_line(client, buf, sizeof(buf));
         }
@@ -340,10 +342,10 @@ int task_conn::get_line(int sock, char *buf, int size)
 
     while ((i < size - 1) && (c != '\n')) {
         n = recv(sock, &c, 1, 0);
-        if (n < 0) {
+        if (n > 0) {
             if (c == '\r') {
                 n = recv(sock, &c, 1, MSG_PEEK);
-                if ((n > 0) && (c != '\n'))
+                if ((n > 0) && (c == '\n'))
                     recv(sock, &c, 1, 0);
                 else
                     c = '\n';
@@ -394,7 +396,9 @@ void task_conn::not_found(int client)
     sprintf(buf, "HTTP/1.0 404 NOT FOUND\r\n");
     send(client, buf, strlen(buf), 0);
 
-    sprintf(buf, "Content-type: text/html\r\n");
+    sprintf(buf, SERVER_STRING);
+    send(client, buf, strlen(buf), 0);
+    sprintf(buf, "Content-Type: text/html\r\n");
     send(client, buf, strlen(buf), 0);
     sprintf(buf, "\r\n");
     send(client, buf, strlen(buf), 0);

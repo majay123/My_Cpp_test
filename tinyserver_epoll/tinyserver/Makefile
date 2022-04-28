@@ -16,8 +16,8 @@ predefine.o: predefine.cpp predefine.h
 task.o: task.cpp task.h
 	g++ -c $(FLAG) task.cpp
 
-mian.o: mian.cpp $(SERVER_HEADERS)
-	g++ -c $(FLAG) mian.cpp
+main.o: main.cpp $(SERVER_HEADERS)
+	g++ -c $(FLAG) main.cpp
 
 clean:
 	rm *.o

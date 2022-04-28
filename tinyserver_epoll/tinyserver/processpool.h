@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-04-26 13:28:33
  * @LastEditors  : MCD
- * @LastEditTime : 2022-04-27 14:44:25
+ * @LastEditTime : 2022-04-28 10:24:07
  * @FilePath     : /My_Cpp_test/tinyserver_epoll/tinyserver/processpool.h
  * @Description  :
  *
@@ -116,10 +116,12 @@ processpool<T>::processpool(int listenfd, int process_number)
     : m_listenfd(listenfd), m_process_number(process_number), m_idx(-1), m_stop(false)
 {
     assert((process_number > 0) && (process_number <= MAX_PROCESS_NUMBER));
+    dbg(process_number);
     m_sub_process = new process[process_number];
 
     for (int i = 0; i < process_number; i++) {
-        int ret = socketpair(PF_INET, SOCK_STREAM, 0, m_sub_process[i].m_pipefd);
+        int ret = socketpair(PF_UNIX, SOCK_STREAM, 0, m_sub_process[i].m_pipefd);
+        dbg(ret);
         assert(ret == 0);
 
         m_sub_process[i].m_pid = fork();
@@ -262,7 +264,7 @@ void processpool<T>::run_child()
             if ((sockfd == pipefd) && (events[i].events & EPOLLIN)) {
                 int client = 0;
                 ret = recv(sockfd, (char *)&client, sizeof(client), 0);
-                if ((ret < 0) && (errno != EINTR) || (ret == 0))
+                if ((ret < 0) && (errno != EAGAIN) || (ret == 0))
                     continue;
                 else {
                     struct sockaddr_in client_address;
@@ -319,7 +321,7 @@ void processpool<T>::setup_sig_pipe()
 {
     m_epollfd = epoll_create(5);
     assert(m_epollfd != -1);
-    int ret = socketpair(PF_INET, SOCK_STREAM, 0, sig_pipefd);
+    int ret = socketpair(PF_UNIX, SOCK_STREAM, 0, sig_pipefd);
     setnonblock(sig_pipefd[1]);
     addfd(m_epollfd, sig_pipefd[0]);
     addsig(SIGCHLD, sig_handler);
