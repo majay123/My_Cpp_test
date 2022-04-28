@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-04-26 13:28:33
  * @LastEditors  : MCD
- * @LastEditTime : 2022-04-28 12:56:46
+ * @LastEditTime : 2022-04-28 13:09:25
  * @FilePath     : /My_Cpp_test/tinyserver_epoll/tinyserver/task.cpp
  * @Description  :
  *
@@ -62,7 +62,7 @@ void task_conn::accept_request()
 
     numchar = get_line(m_sockfd, buf, sizeof(buf));
     // dbg(ISspace(buf[j]));
-    while (ISspace(buf[j]) && (i < sizeof(method) - 1)) {
+    while (!ISspace(buf[j]) && (i < sizeof(method) - 1)) {
         method[i] = buf[j];
         i++;
         j++;

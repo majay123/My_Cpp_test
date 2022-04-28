@@ -31,7 +31,7 @@
  * @Author       : MCD
  * @Date         : 2022-04-26 13:28:33
  * @LastEditors  : MCD
- * @LastEditTime : 2022-04-28 10:24:07
+ * @LastEditTime : 2022-04-28 13:12:54
  * @FilePath     : /My_Cpp_test/tinyserver_epoll/tinyserver/processpool.h
  * @Description  :
  *
@@ -69,7 +69,7 @@ template <typename T>
 class processpool
 {
   private:
-    processpool(int listen_fd, int process_number = DEFAULT_PROCESS_NUMBER);
+    processpool(int listenfd, int process_number = DEFAULT_PROCESS_NUMBER);
     void run_parent(void);
     void run_child(void);
     void setup_sig_pipe(void);
@@ -106,7 +106,7 @@ processpool<T> *processpool<T>::create(int listenfd, int process_number)
 }
 
 template <typename T>
-processpool<T>::~processpool()
+processpool<T>::~processpool(void)
 {
     delete[] m_sub_process;
 }
@@ -138,7 +138,7 @@ processpool<T>::processpool(int listenfd, int process_number)
 }
 
 template <typename T>
-void processpool<T>::run()
+void processpool<T>::run(void)
 {
     if (m_idx != -1) {
         dbg("child pid is %d", getpid());
@@ -218,7 +218,7 @@ void processpool<T>::run_parent()
                     case SIGTERM: {
                         dbg("all the child will be killed");
                         for (int s = 0; s < m_process_number; s++) {
-                            kill(m_sub_process[i].m_pid, SIGTERM);
+                            kill(m_sub_process[s].m_pid, SIGTERM);
                         }
                         m_stop = true;
                         break;
@@ -271,7 +271,7 @@ void processpool<T>::run_child()
                     socklen_t client_addrlength = sizeof(client_address);
                     int connfd = accept(m_listenfd, (struct sockaddr *)&client_address, &client_addrlength);
                     if (connfd < 0) {
-                        dbg("accpet error, errno is %d", errno);
+                        dbg("accept error, errno is %d", errno);
                         continue;
                     }
                     addfd(m_epollfd, connfd);
